@@ -221,8 +221,10 @@ installclean_files := \
 	$(HOST_CROSS_OUT)/coverage \
 	$(HOST_CROSS_OUT)/lib* \
 	$(HOST_CROSS_OUT)/nativetest* \
+	$(PRODUCT_OUT)/*.cpio \
 	$(PRODUCT_OUT)/*.img \
 	$(PRODUCT_OUT)/*.ini \
+	$(PRODUCT_OUT)/*.md5sum \
 	$(PRODUCT_OUT)/*.txt \
 	$(PRODUCT_OUT)/*.xlb \
 	$(PRODUCT_OUT)/*.zip \
@@ -246,6 +248,10 @@ installclean_files := \
 	$(PRODUCT_OUT)/odm \
 	$(PRODUCT_OUT)/sysloader \
 	$(PRODUCT_OUT)/testcases \
+	$(PRODUCT_OUT)/fake_packages \
+	$(PRODUCT_OUT)/gen \
+	$(PRODUCT_OUT)/install \
+	$(PRODUCT_OUT)/symbols \
 
 # The files/dirs to delete during a dataclean, which removes any files
 # in the staging and emulator data partitions.
