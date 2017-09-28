@@ -27,6 +27,9 @@ LOCAL_MULTILIB := first
 endif
 endif
 
+# include target-optimizations
+include $(BUILD_TARGET_OPTIMIZATIONS)
+
 my_prefix := TARGET_
 include $(BUILD_SYSTEM)/multilib.mk
 
