@@ -2551,29 +2551,55 @@ $(INTERNAL_OTA_PACKAGE_TARGET): $(BUILT_TARGET_FILES_PACKAGE) \
 	   $(if $(OEM_OTA_CONFIG), -o $(OEM_OTA_CONFIG)) \
 	   $(BUILT_TARGET_FILES_PACKAGE) $@
 
-GZOSP_TARGET_PACKAGE := $(PRODUCT_OUT)/$(GZOSP_VERSION).zip
+NEXUS_TARGET_PACKAGE := $(PRODUCT_OUT)/$(GZOSP_VERSION).zip
 
-.PHONY: otapackage bacon gzosp
+ifneq ($(BUILD_WITH_COLORS),0)
+    CL_WHT='\e[0;37m'
+endif
+
+.PHONY: otapackage bacon nexus
 otapackage: $(INTERNAL_OTA_PACKAGE_TARGET)
 bacon: otapackage
-	$(hide) ln -f $(INTERNAL_OTA_PACKAGE_TARGET) $(GZOSP_TARGET_PACKAGE)
-	$(hide) $(MD5SUM) $(GZOSP_TARGET_PACKAGE) > $(GZOSP_TARGET_PACKAGE).md5sum
-	@echo -e "Package complete: $(GZOSP_TARGET_PACKAGE)"
-gzosp: otapackage
-	$(hide) ln -f $(INTERNAL_OTA_PACKAGE_TARGET) $(GZOSP_TARGET_PACKAGE)
-	$(hide) $(MD5SUM) $(GZOSP_TARGET_PACKAGE) > $(GZOSP_TARGET_PACKAGE).md5sum
-	@echo -e ${CL_RED}""${CL_RED}
-	@echo -e ${CL_RED}"    ▄██████▄   ▄███████▄   ▄██████▄     ▄████████    ▄███████▄ "${CL_RED}
-	@echo -e ${CL_RED}"   ███    ███ ██▀     ▄██ ███    ███   ███    ███   ███    ███ "${CL_RED}
-	@echo -e ${CL_RED}"   ███    █▀        ▄███▀ ███    ███   ███    █▀    ███    ███ "${CL_RED}
-	@echo -e ${CL_RED}"  ▄███         ▀█▀▄███▀▄▄ ███    ███   ███          ███    ███ "${CL_RED}
-	@echo -e ${CL_RED}" ▀▀███ ████▄    ▄███▀   ▀ ███    ███ ▀███████████ ▀█████████▀ "${CL_RED}
-	@echo -e ${CL_RED}"   ███    ███ ▄███▀       ███    ███          ███   ███ "${CL_RED}
-	@echo -e ${CL_RED}"   ███    ███ ███▄     ▄█ ███    ███    ▄█    ███   ███ "${CL_RED}
-	@echo -e ${CL_RED}"   ████████▀   ▀████████▀  ▀██████▀   ▄████████▀   ▄████▀ "${CL_RED}
-	@echo -e ${CL_RED}"                           A Ground Zero Roms "${CL_RED}
-	@echo -e ${CL_RED}"                                Project      "${CL_RED}
-	@echo -e "Package complete: $(GZOSP_TARGET_PACKAGE)"
+	$(hide) ln -f $(INTERNAL_OTA_PACKAGE_TARGET) $(NEXUS_TARGET_PACKAGE)
+	$(hide) $(MD5SUM) $(NEXUS_TARGET_PACKAGE) > $(NEXUS_TARGET_PACKAGE).md5sum
+	@echo -e "Package complete: $(NEXUS_TARGET_PACKAGE)"
+nexus: otapackage
+	$(hide) ln -f $(INTERNAL_OTA_PACKAGE_TARGET) $(NEXUS_TARGET_PACKAGE)
+	$(hide) $(MD5SUM) $(NEXUS_TARGET_PACKAGE) > $(NEXUS_TARGET_PACKAGE).md5sum
+	@echo -e ""
+	@echo -e ""
+	@echo -e ${CL_BLU}"  .      .      .      .      .      .      .      .      .      .      . "
+	@echo -e ${CL_BLU}" .                               .       .       .       .       .       . "
+	@echo -e ${CL_BLU}"    .        .        .        .        .        .        .        .        . "
+	@echo -e ${CL_BLU}"      .         .         ."${CL_CYN}"        _......____._        "${CL_BLU}".         . "
+	@echo -e ${CL_BLU}"    .          .          ."${CL_CYN}" ..--'\"\" .           \"\"\"\"\"\"---...          "${CL_BLU}". "
+	@echo -e ${CL_BLU}"                    "${CL_CYN}"_...--\"\"        ................       \`-.              "${CL_BLU}". "
+	@echo -e ${CL_BLU}"                 "${CL_CYN}".-'        ...:'::::;:::%:.::::::_;;:...     \`-. "
+	@echo -e ${CL_BLU}"              "${CL_CYN}".-'       ..::::'''''   _...---'\"\"\"\":::+;_::.      \`.      "${CL_BLU}". "
+	@echo -e ${CL_BLU}"   ."${CL_CYN}"        .' .    ..::::'      _.-\"\"               :::)::.       \`. "
+	@echo -e ${CL_BLU}"          "${CL_CYN}".      ..;:::'     _.-'         .             f::'::    o  _ "
+	@echo -e ${CL_BLU}"         "${CL_CYN}"/     .:::%'  .  .-\"                        .-.  ::;;:.   /\" \"x "
+	@echo -e ${CL_BLU}"   ."${CL_CYN}"   .'  \"\"::.::'    .-\"     _.--'\"\"\"-.           (   )  ::.::  |_.-' | "
+	@echo -e ${CL_BLU}"      "${CL_CYN}".'    ::;:'    .'     .-\" "${CL_YLW}".d@@b."${CL_CYN}"   \    .    . \`-'   ::%::   \_ _/    . "
+	@echo -e ${CL_BLU}"     "${CL_CYN}".'    :,::'    /   . _'    "${CL_YLW}"8@@@@8"${CL_CYN}"   j      .-'       :::::      \" o "
+	@echo -e ${CL_BLU}"     "${CL_CYN}"| .  :.%:' .  j     (_)    "${CL_YLW}"\`@@@P'"${CL_CYN}"  .'   .-\"         ::.::    .  f "
+	@echo -e ${CL_BLU}"     "${CL_CYN}"|    ::::     (        -..____...-'  .-\"          .::::'       / "
+	@echo -e ${CL_BLU}" ."${CL_CYN}"   |    \`:\`::    \`.                ..--'        .  .::'::   .    / "
+	@echo -e ${CL_BLU}"     "${CL_CYN}"j     \`:::::    \`-._____...---\"\"             .::%:::'       .'  . "
+	@echo -e ${CL_BLU}"      "${CL_CYN}"\      ::.:%..             .       .    ...:,::::'       .' "
+	@echo -e ${CL_BLU}"  ."${CL_CYN}"    \       \`:::\`:..                ....::::.::::'       .-'          "${CL_BLU}". "
+	@echo -e ${CL_BLU}"        "${CL_CYN}"\    .   \`\`:::%::\`::.......:::::%::.::::''       .-' "
+	@echo -e ${CL_BLU}"       ."${CL_CYN}" \`.        . \`\`::::::%::::.::;;:::::'''      _.-'          "${CL_BLU}". "
+	@echo -e ${CL_BLU}"   ."${CL_CYN}"       \`-..     .    .   \`\`\`\`'''''         . _.-'     "${CL_BLU}".          . "
+	@echo -e ${CL_BLU}"          ."${CL_CYN}"    \"\"--...____    .   ______......--' "${CL_BLU}".         .         . "
+	@echo -e ${CL_BLU}"   .        .        ."${CL_CYN}"    \"\"\"\"\"\"\"\"     "${CL_BLU}".        .        .        .        . "
+	@echo -e ${CL_BLU}"  .       .       .       .       .       .       .       .       . "
+	@echo -e ${CL_BLU}"      .      .      .      .      .      .      .      .      .      .      . "
+	@echo -e ""
+	@echo -e ""
+	@echo -e ${CL_CYN}"   Package complete: $(NEXUS_TARGET_PACKAGE)"
+	@echo -e ""
+	@echo -e ""
 
 endif    # build_ota_package
 

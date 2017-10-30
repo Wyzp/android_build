@@ -682,9 +682,9 @@ endif  # CALLED_FROM_SETUP not true
 
 # It's called md5 on Mac OS and md5sum on Linux
 ifeq ($(HOST_OS),darwin)
-MD5SUM:=md5 -q
+MD5SUM := md5 -q
 else
-MD5SUM:=md5sum
+MD5SUM := md5sum
 endif
 
 APICHECK_CLASSPATH := $(HOST_JDK_TOOLS_JAR)
