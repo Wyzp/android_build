@@ -194,6 +194,7 @@ $(call project-set-path-variant,recovery,RECOVERY_VARIANT,bootable/recovery)
 
 -include vendor/extra/BoardConfigExtra.mk
 -include vendor/gzosp/config/BoardConfigGzosp.mk
+-include vendor/nexus/board.mk
 
 # The build system exposes several variables for where to find the kernel
 # headers:
