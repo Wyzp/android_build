@@ -30,14 +30,22 @@ ifneq ($(filter-out false,$(USE_CCACHE)),)
   # We don't really use system headers much so the rootdir is
   # fine; ensures these paths are relative for all Android trees
   # on a workstation.
-  export CCACHE_BASEDIR := /
+  ifeq ($(CCACHE_BASEDIR),)
+    export CCACHE_BASEDIR := $(ANDROID_BUILD_TOP)
+  endif
 
   # Workaround for ccache with clang.
   # See http://petereisentraut.blogspot.com/2011/09/ccache-and-clang-part-2.html
   export CCACHE_CPP2 := true
 
-  CCACHE_HOST_TAG := $(HOST_PREBUILT_TAG)
-  ccache := prebuilts/misc/$(CCACHE_HOST_TAG)/ccache/ccache
+  # Detect if the system already has ccache installed to use instead of the prebuilt
+  ccache := $(shell command -v ccache)
+
+  ifeq ($(ccache),)
+    CCACHE_HOST_TAG := $(HOST_PREBUILT_TAG)
+    ccache := prebuilts/misc/$(CCACHE_HOST_TAG)/ccache/ccache
+  endif
+
   # Check that the executable is here.
   ccache := $(strip $(wildcard $(ccache)))
   ifdef ccache
@@ -47,6 +55,12 @@ ifneq ($(filter-out false,$(USE_CCACHE)),)
     ifndef CXX_WRAPPER
       CXX_WRAPPER := $(ccache)
     endif
+    ifeq ($(ANDROID_CCACHE_DIR), $(CCACHE_DIR))
+      ifneq ($(ANDROID_CCACHE_SIZE),)
+        ACCSIZE_RESULT := $(shell $(ccache) -M$(ANDROID_CCACHE_SIZE))
+      endif
+    endif
     ccache =
+    ACCSIZE_RESULT =
   endif
 endif
