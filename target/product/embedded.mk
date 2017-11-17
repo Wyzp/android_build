@@ -68,6 +68,7 @@ PRODUCT_PACKAGES += \
     linker \
     lmkd \
     logcat \
+    logcatd \
     logwrapper \
     lshal \
     recovery \
