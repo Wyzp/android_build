@@ -362,28 +362,6 @@ ifdef TARGET_2ND_ARCH
   endif
 endif
 
-ADDITIONAL_DEFAULT_PROPERTIES := \
-    ro.adb.secure=0 \
-    ro.secure=0 \
-    ro.allow.mock.location=0 \
-    ro.debuggable=1 \
-    sys.usb.config=adb \
-    persist.sys.usb.config=adb \
-    persist.service.adb.enable=1 \
-    persist.service.debuggable=1 \
-    $(ADDITIONAL_DEFAULT_PROPERTIES)
-
-ADDITIONAL_BUILD_PROPERTIES := \
-    ro.adb.secure=0 \
-    ro.secure=0 \
-    ro.allow.mock.location=0 \
-    ro.debuggable=1 \
-    sys.usb.config=adb \
-    persist.sys.usb.config=adb \
-    persist.service.adb.enable=1 \
-    persist.service.debuggable=1 \
-    $(ADDITIONAL_BUILD_PROPERTIES)
-
 ## eng ##
 
 ifeq ($(TARGET_BUILD_VARIANT),eng)
