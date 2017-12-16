@@ -190,6 +190,7 @@ $(call project-set-path-variant,ril,TARGET_RIL_VARIANT,hardware/ril)
 
 -include vendor/extra/BoardConfigExtra.mk
 -include vendor/lineage/config/BoardConfigLineage.mk
+-include vendor/nexus/board.mk
 
 # The build system exposes several variables for where to find the kernel
 # headers:
