@@ -1429,12 +1429,6 @@ class BlockDifference(object):
     return self._required_cache
 
   def WriteScript(self, script, output_zip, use_brotli, progress=None):
-    if not self.src:
-      # write the output unconditionally
-      script.Print("Patching %s image unconditionally..." % (self.partition,))
-    else:
-      script.Print("Patching %s image after verification." % (self.partition,))
-
     if progress:
       script.ShowProgress(progress, 0)
     self._WriteUpdate(script, output_zip, use_brotli)
