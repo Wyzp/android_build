@@ -500,31 +500,26 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
 
   script.Print("                                                   ");
   script.Print("                                                   ");
-  script.Print("           *             ,                         ");
-  script.Print("                       _/^\_                       ");
-  script.Print("                      <     >                      ");
-  script.Print("     *                 /.-.\         *             ");
-  script.Print("              *        `/&\`                   *   ");
-  script.Print("                      ,@.*;@,                      ");
-  script.Print("                     /_o.I %_\    *                ");
-  script.Print("        *           (`'--:o(_@;                    ");
-  script.Print("                   /`;--.,__ `')             *     ");
-  script.Print("                  ;@`o % O,*`'`&\                  ");
-  script.Print("            *    (`'--)_@ ;o %'()\      *          ");
-  script.Print("                 /`;--._`''--._O'@;                ");
-  script.Print("                /&*,()~o`;-.,_ `\\\"\\\"`)               ");
-  script.Print("     *          /`,@ ;+& () o*`;-';\               ");
-  script.Print("               (`\\\"\\\"--.,_0 +% @' &()\               ");
-  script.Print("               /-.,_    ``''--....-'`)  *          ");
-  script.Print("          *    /@%;o`:;'--,.__   __.'\             ");
-  script.Print("              ;*,&(); @ % &^;~`\\\"`o;@();         *  ");
-  script.Print("              /(); o^~; & ().o@*&`;&%O\            ");
-  script.Print("              `\\\"=\\\"==\\\"\\\"==,,,.,=\\\"==\\\"===\\\"`            ");
-  script.Print("           __.----.(\-''#####---...___...-----._   ");
-  script.Print("         '`         \)_`\\\"\\\"\\\"\\\"\\\"`                     ");
-  script.Print("                 .--' ')                           ");
-  script.Print("               o(  )_-\                            ");
-  script.Print("                 `\\\"\\\"\\\"` `                           ");
+  script.Print("                             .'':                  ");
+  script.Print("                       .-\\\"\\\"\\\"\\\"-.'       ");
+  script.Print("                     .\\\"     .' \\\".            ");
+  script.Print("                     :    .'    :                  ");
+  script.Print("                     :  .'      :                  ");
+  script.Print("                   .'.'.      .'                   ");
+  script.Print("                   ''   ``````                     ");
+  script.Print("                                                   ");
+  script.Print("                                                   ");
+  script.Print("        ,   .                   ,---.,---.         ");
+  script.Print("        |\\  |,---..  ,.   .,---.|   |`---.        ");
+  script.Print("        | \\ ||---' >< |   |`---.|   |    |        ");
+  script.Print("        `  `'`---''  ``---'`---'`---'`---'         ");
+  script.Print("                                                   ");
+  script.Print("                                                   ");
+  script.Print("                    NexusOS 8.1                    ");
+  script.Print("                                                   ");
+  script.Print("     Custom Android 8.1-ROM based on LineageOS     ");
+  script.Print("                                                   ");
+  script.Print("                                                   ");
 
   if OPTIONS.wipe_user_data:
     system_progress -= 0.1
