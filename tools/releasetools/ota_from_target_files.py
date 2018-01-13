@@ -426,6 +426,14 @@ def WriteFullOTAPackage(input_zip, output_zip):
   # Put a plain build.prop into the OTA-package
   common.ZipWriteStr(output_zip, "system/build.prop", "" + input_zip.read("SYSTEM/build.prop"))
 
+  # Put the vendor-specific build.prop into the package
+  if HasVendorPartition(input_zip):
+    # TODO: check if VENDOR really resolved to the correct
+    # directory on system-vendor-split devices
+    common.ZipWriteStr(output_zip, "vendor/build.prop", "" + input_zip.read("VENDOR/build.prop"))
+  else:
+    common.ZipWriteStr(output_zip, "vendor/build.prop", "" + input_zip.read("SYSTEM/vendor/build.prop"))
+
   assert HasRecoveryPatch(input_zip)
 
   metadata["ota-type"] = "BLOCK"
