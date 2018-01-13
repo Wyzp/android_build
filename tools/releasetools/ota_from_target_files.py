@@ -423,6 +423,9 @@ def WriteFullOTAPackage(input_zip, output_zip):
       metadata=metadata,
       info_dict=OPTIONS.info_dict)
 
+  # Put a plain build.prop into the OTA-package
+  common.ZipWriteStr(output_zip, "system/build.prop", "" + input_zip.read("SYSTEM/build.prop"))
+
   assert HasRecoveryPatch(input_zip)
 
   metadata["ota-type"] = "BLOCK"
