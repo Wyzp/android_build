@@ -436,6 +436,29 @@ def WriteFullOTAPackage(input_zip, output_zip):
 
   assert HasRecoveryPatch(input_zip)
 
+  script.Print("                                                   ");
+  script.Print("                                                   ");
+  script.Print("                             .'':                  ");
+  script.Print("                       .-\\\"\\\"\\\"\\\"-.'       ");
+  script.Print("                     .\\\"     .' \\\".            ");
+  script.Print("                     :    .'    :                  ");
+  script.Print("                     :  .'      :                  ");
+  script.Print("                   .'.'.      .'                   ");
+  script.Print("                   ''   ``````                     ");
+  script.Print("                                                   ");
+  script.Print("                                                   ");
+  script.Print("        ,   .                   ,---.,---.         ");
+  script.Print("        |\\  |,---..  ,.   .,---.|   |`---.        ");
+  script.Print("        | \\ ||---' >< |   |`---.|   |    |        ");
+  script.Print("        `  `'`---''  ``---'`---'`---'`---'         ");
+  script.Print("                                                   ");
+  script.Print("                                                   ");
+  script.Print("                    NexusOS 8.1                    ");
+  script.Print("                                                   ");
+  script.Print("     Custom Android 8.1-ROM based on LineageOS     ");
+  script.Print("                                                   ");
+  script.Print("                                                   ");
+
   metadata["ota-type"] = "BLOCK"
 
   #ts = GetBuildProp("ro.build.date.utc", OPTIONS.info_dict)
@@ -491,43 +514,27 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
     # Stage 3/3: Make changes.
     script.Comment("Stage 3/3")
 
+  script.Print(" [*] Unmounting /system/...")
+  script.Print(" ")
   script.AppendExtra("ifelse(is_mounted(\"/system\"), unmount(\"/system\"));")
   device_specific.FullOTA_InstallBegin()
 
+  script.Print(" [*] Extracting tools...")
+  script.Print(" ")
   CopyInstallTools(output_zip)
   script.UnpackPackageDir("install", "/tmp/install")
   script.SetPermissionsRecursive("/tmp/install", 0, 0, 0755, 0644, None, None)
   script.SetPermissionsRecursive("/tmp/install/bin", 0, 0, 0755, 0755, None, None)
 
   if OPTIONS.backuptool:
+    script.Print(" [*] Running backups...")
+    script.Print(" ")
+
     script.Mount("/system")
     script.RunBackup("backup")
     script.Unmount("/system")
 
   system_progress = 0.75
-
-  script.Print("                                                   ");
-  script.Print("                                                   ");
-  script.Print("                             .'':                  ");
-  script.Print("                       .-\\\"\\\"\\\"\\\"-.'       ");
-  script.Print("                     .\\\"     .' \\\".            ");
-  script.Print("                     :    .'    :                  ");
-  script.Print("                     :  .'      :                  ");
-  script.Print("                   .'.'.      .'                   ");
-  script.Print("                   ''   ``````                     ");
-  script.Print("                                                   ");
-  script.Print("                                                   ");
-  script.Print("        ,   .                   ,---.,---.         ");
-  script.Print("        |\\  |,---..  ,.   .,---.|   |`---.        ");
-  script.Print("        | \\ ||---' >< |   |`---.|   |    |        ");
-  script.Print("        `  `'`---''  ``---'`---'`---'`---'         ");
-  script.Print("                                                   ");
-  script.Print("                                                   ");
-  script.Print("                    NexusOS 8.1                    ");
-  script.Print("                                                   ");
-  script.Print("     Custom Android 8.1-ROM based on LineageOS     ");
-  script.Print("                                                   ");
-  script.Print("                                                   ");
 
   if OPTIONS.wipe_user_data:
     system_progress -= 0.1
@@ -542,6 +549,8 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
   recovery_mount_options = OPTIONS.info_dict.get("recovery_mount_options")
 
   script.ShowProgress(system_progress, 0)
+  script.Print(" [*] Installing /system/...")
+  script.Print(" ")
 
   # Full OTA is done as an "incremental" against an empty source image. This
   # has the effect of writing new data from the package to the entire
@@ -551,28 +560,37 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
   system_tgt.ResetFileMap()
   system_diff = common.BlockDifference("system", system_tgt, src=None)
   system_diff.WriteScript(script, output_zip)
+  script.Print(" ")
 
   boot_img = common.GetBootableImage(
       "boot.img", "boot.img", OPTIONS.input_tmp, "BOOT")
 
   if HasVendorPartition(input_zip):
     script.ShowProgress(0.1, 0)
+    script.Print(" [*] Installing /vendor/...")
+    script.Print(" ")
 
     vendor_tgt = GetImage("vendor", OPTIONS.input_tmp)
     vendor_tgt.ResetFileMap()
     vendor_diff = common.BlockDifference("vendor", vendor_tgt)
     vendor_diff.WriteScript(script, output_zip)
+    script.Print(" ")
 
   common.CheckSize(boot_img.data, "boot.img", OPTIONS.info_dict)
   common.ZipWriteStr(output_zip, "boot.img", boot_img.data)
 
   if OPTIONS.backuptool:
     script.ShowProgress(0.02, 10)
+    script.Print(" [*] Restoring backups...")
+    script.Print(" ")
+
     script.Mount("/system")
     script.RunBackup("restore")
     script.Unmount("/system")
 
   script.ShowProgress(0.05, 5)
+  script.Print(" [*] Installing boot.img...")
+  script.Print(" ")
   script.WriteRawImage("/boot", "boot.img")
 
   script.ShowProgress(0.2, 10)
@@ -585,6 +603,9 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
 
   if OPTIONS.wipe_user_data:
     script.ShowProgress(0.1, 10)
+    script.Print(" [*] Wiping /data/...")
+    script.Print(" ")
+
     script.FormatPartition("/data")
 
   if OPTIONS.two_step:
@@ -603,6 +624,9 @@ reboot_now("%(bcb_dev)s", "");
 endif;
 endif;
 """ % bcb_dev)
+
+  script.Print(" Finished!")
+  script.Print(" ")
 
   script.SetProgress(1)
   script.AddToZip(input_zip, output_zip, input_path=OPTIONS.updater_binary)
