@@ -564,7 +564,6 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
   system_tgt.ResetFileMap()
   system_diff = common.BlockDifference("system", system_tgt, src=None)
   system_diff.WriteScript(script, output_zip, OPTIONS.use_brotli)
-  script.Print(" ")
 
   boot_img = common.GetBootableImage(
       "boot.img", "boot.img", OPTIONS.input_tmp, "BOOT")
@@ -578,7 +577,6 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
     vendor_tgt.ResetFileMap()
     vendor_diff = common.BlockDifference("vendor", vendor_tgt)
     vendor_diff.WriteScript(script, output_zip, OPTIONS.use_brotli)
-    script.Print(" ")
 
   common.CheckSize(boot_img.data, "boot.img", OPTIONS.info_dict)
   common.ZipWriteStr(output_zip, "boot.img", boot_img.data)
