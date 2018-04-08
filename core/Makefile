@@ -365,6 +365,7 @@ vendor_prop_file := $(TARGET_VENDOR_PROP)
 else
 vendor_prop_file := $(wildcard $(TARGET_DEVICE_DIR)/vendor.prop)
 endif
+ifneq ($(TARGET_VENDOR_PROP_OVERRIDE),true)
 $(INSTALLED_VENDOR_BUILD_PROP_TARGET): $(VENDOR_BUILDINFO_SH) $(intermediate_system_build_prop)
 	@echo Target vendor buildinfo: $@
 	@mkdir -p $(dir $@)
@@ -397,6 +398,28 @@ ifdef property_overrides_split_enabled
 		echo "$(line)" >> $@;)
 	$(hide) build/tools/post_process_props.py $@
 endif  # property_overrides_split_enabled
+
+else   # TARGET_VENDOR_PROP_OVERRIDE=true
+
+$(INSTALLED_VENDOR_BUILD_PROP_TARGET):
+	@echo Target vendor buildinfo: $@
+	@mkdir -p $(dir $@)
+	$(hide) $(foreach file,$(vendor_prop_file), \
+		if [ -f "$(file)" ]; then \
+			echo "#" >> $@; \
+			echo Target buildinfo from: "$(file)"; \
+			echo "# from $(file)" >> $@; \
+			echo "#" >> $@; \
+			cat $(file) >> $@; \
+		fi;)
+	$(hide) echo "#" >> $@; \
+	        echo "# ADDITIONAL VENDOR BUILD PROPERTIES" >> $@; \
+	        echo "#" >> $@;
+	$(hide) $(foreach line,$(FINAL_VENDOR_BUILD_PROPERTIES), \
+		echo "$(line)" >> $@;)
+	$(hide) build/tools/post_process_props.py $@
+
+endif  # TARGET_VENDOR_PROP_OVERRIDE=true
 endif  # TARGET_COPY_OUT_VENDOR=system
 
 # ----------------------------------------------------------------
